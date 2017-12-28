@@ -11,14 +11,8 @@ class CalendarEventsController extends Controller
 {
     public function index()
     {
-        $next_month = Carbon::now()->addMonth(1);
-        $next_month->day = 1;
-        $next_month->hour = 0;
-        $calendar_events = CalendarEvents::query()
-                ->where('date_of', '>', Carbon::now() )
-                ->where('date_of', '<', $next_month)
-                ->orderBy('date_of', 'asc')
-                ->get();
+        $calendar_events = CalendarEvents::afterMonth()->orderBy('date_of', 'asc')->get();
+
         return view('calendar_events.index', compact('calendar_events'));
     }
 
